@@ -1,6 +1,24 @@
-{% macro datos( name,placeholder,type="text") %}
-<div class="mb-3">
-    <label for="{{ name }}" class="form-label"> {{name}}:</label>
-    <input type="{{type}}" class="form-control" id="{{name}}" name="{{name}}" placeholder="{{placeholder}}">
-</div>
+{% macro campoNuevo(field) %}
+
+    <label for="{{ field.id }}" {{ kwargs|xmlattr }}>
+        {{ field.label.text }}
+    </label>
+
+    {{ field(
+        class="bg-neutral-secondary-medium border border-default-medium 
+               text-heading text-sm rounded-base 
+               focus:ring-brand focus:border-brand 
+               block w-full px-3 py-2.5 shadow-xs 
+               placeholder:text-body"
+    ) }}
+
+    <!-- ERRORES -->
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <p class="mt-1 text-sm text-red-600">
+                {{ error }}
+            </p>
+        {% endfor %}
+    {% endif %}
+
 {% endmacro %}

@@ -1,8 +1,8 @@
 class Config(object):
-    SECRET_KEYA="Clave nueva"
-    SESSIONS_COOKIE_SECURE=False
+    SECRET_KEY = "Clave nueva"  # <- nombre correcto
+    SESSION_COOKIE_SECURE = False  # <- typo corregido
 
 class DevelopmentConfig(Config):
-    DEBUG=True
-    SQLALCHEMY_DATABASE_URI="mysql+pymysql://root:quegay @localhost:3306/dbidgs802"
-    SQLALCHEMY_TRACK_MODIFICATION=False
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://flaskuser:1234@127.0.0.1:3306/bdidgs802"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False  # <- typo corregido
