@@ -4,13 +4,16 @@ from flask_wtf.csrf import CSRFProtect
 from config import DevelopmentConfig
 from flask import g
 import forms
+from flask_migrate import Migrate
+
 from models import db
 from models import Alumnos
 
 app = Flask(__name__)
 app.config.from_object(DevelopmentConfig)
-db.init_app(app)
 csrf = CSRFProtect()
+db.init_app(app)
+migrate = Migrate(app, db)
 
 @app.route("/404")
 def page_not_fount():
@@ -68,15 +71,31 @@ def modificar():
         id = create_form.id.data
         alum= db.session.query(Alumnos).filter(Alumnos.id==id).first()
         alum.id = id
-        alum.nombre = str-rstrip(create_form.nombre.data)
+        alum.nombre = str.rstrip(create_form.nombre.data)
         alum.apaterno = create_form.aPaterno.data
         alum.email = create_form.email.data
-    db.session.add(alum)
-    db.session.commit()
-    return render_template("detalles.html",nombre=create_form.nombre.data, apaterno = create_form.aPaterno.data, email=create_form.email.data)
+        db.session.add(alum)
+        db.session.commit()
+    return render_template("modificar.html",form=create_form,nombre=create_form.nombre.data, apaterno = create_form.aPaterno.data, email=create_form.email.data)
 
 
-    return render_template("alumnos.html", form=create_form)
+@app.route("/eliminar",methods=["GET","POST"])
+def eliminar():
+    create_form=forms.UserForm(request.form)
+    if request.method=='GET':
+        id = request.args.get('id')
+        alum= db.session.query(Alumnos).filter(Alumnos.id==id).first()
+        create_form.id.data=request.args.get('id')
+        create_form.nombre.data=alum.nombre
+        create_form.aPaterno.data=alum.apaterno
+        create_form.email.data=alum.email
+    if request.method=='POST':
+        id = create_form.id.data
+        alum= db.session.query(Alumnos).get(id)
+        db.session.delete(alum)
+        db.session.commit()
+        return redirect(url_for('index'))
+    return render_template("eliminar.html",form=create_form)
 
 if __name__ == '__main__':
     csrf = CSRFProtect(app)
