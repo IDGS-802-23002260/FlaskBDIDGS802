@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block container %}
+
+<div class="max-w-md mx-auto mt-10 bg-white shadow-md rounded-lg p-6">
+
+    <h2 class="text-xl font-bold mb-6 text-center">
+        Detalles del Maestro
+    </h2>
+
+    <div class="mb-3">
+        <strong>Matrícula:</strong> {{ maestro.matricula }}
+    </div>
+
+    <div class="mb-3">
+        <strong>Nombre:</strong> {{ maestro.nombre }}
+    </div>
+
+    <div class="mb-3">
+        <strong>Apellidos:</strong> {{ maestro.apellidos }}
+    </div>
+
+    <div class="mb-3">
+        <strong>Especialidad:</strong> {{ maestro.especialidad }}
+    </div>
+
+    <div class="mb-3">
+        <strong>Email:</strong> {{ maestro.email }}
+    </div>
+
+    <div class="mt-6 text-center">
+        <a href="{{ url_for('maestros.maestros') }}"
+           class="text-white bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded">
+           Regresar
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

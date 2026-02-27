@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% block container %}
+{% import "_macros.html" as macros %}
+
+<div class="max-w-6xl mx-auto px-6 mt-12">
+
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-semibold text-heading">
+            Lista de Maestros
+        </h2>
+
+        <!-- IMPORTANTE: Blueprint requiere maestros.maestros -->
+        <a href="{{ url_for('maestros.agregar_maestro') }}"
+           class="text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium font-medium rounded-base text-sm px-4 py-2 shadow-xs">
+            Agregar Maestro
+        </a>
+    </div>
+
+    <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-md rounded-xl border border-default">
+        <table class="w-full text-sm text-left text-body">
+            <thead class="bg-neutral-secondary-soft border-b border-default">
+                <tr>
+                    <th class="px-6 py-3 font-medium">Matrícula</th>
+                    <th class="px-6 py-3 font-medium">Nombre</th>
+                    <th class="px-6 py-3 font-medium">Apellidos</th>
+                    <th class="px-6 py-3 font-medium">Especialidad</th>
+                    <th class="px-6 py-3 font-medium">Correo</th>
+                    <th class="px-6 py-3 font-medium text-center">Consultar</th>
+                    <th class="px-6 py-3 font-medium text-center">Editar</th>
+                    <th class="px-6 py-3 font-medium text-center">Eliminar</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for maestro in maestros %}
+                <tr class="odd:bg-neutral-primary even:bg-neutral-secondary-soft border-b border-default">
+                    <td class="px-6 py-4">{{ maestro.matricula }}</td>
+                    <td class="px-6 py-4">{{ maestro.nombre }}</td>
+                    <td class="px-6 py-4">{{ maestro.apellidos }}</td>
+                    <td class="px-6 py-4">{{ maestro.especialidad }}</td>
+                    <td class="px-6 py-4">{{ maestro.email }}</td>
+
+                    <td class="px-6 py-4 text-center">
+                        <a href="{{ url_for('maestros.detalles_maestro', id=maestro.id) }}"
+                            class="text-blue-600 hover:underline">
+                            Ver Detalles
+                        </a>
+                    </td>
+
+                    <td class="px-6 py-4 text-center">
+                        <a href="{{ url_for('maestros.modificar_maestro', id=maestro.id) }}"
+                            class="text-blue-600 hover:underline">
+                            Editar
+                        </a>
+                    </td>
+
+                    <td class="px-6 py-4 text-center">
+                        <a href="{{ url_for('maestros.eliminar_maestro', id=maestro.id) }}"
+                            class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-3 py-1">
+                            Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" class="text-center py-6 text-gray-500">
+                        No hay maestros registrados.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

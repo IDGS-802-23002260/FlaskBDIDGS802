@@ -1,0 +1,37 @@
+a{% extends "layout.html" %}
+{% block container %}
+{% import "_macros.html" as macros %}
+
+<div class="w-full max-w-sm bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs mx-auto mt-6">
+
+    <h5 class="text-2xl text-heading font-bold tracking-tight mb-6 text-center text-red-600">
+        Eliminar Maestro
+    </h5>
+
+    <form method="post">
+        {{ form.csrf_token }}
+        {{ form.id }}
+
+        <p class="mb-4 text-lg">
+            ¿Estás seguro que deseas eliminar al maestro:
+            <strong>{{ form.nombre.data }} {{ form.apellidos.data }}</strong>?
+        </p>
+
+        <div class="flex justify-between mt-6">
+
+            <button type="submit"
+                class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-4 py-2">
+                Eliminar
+            </button>
+
+            <a href="{{ url_for('maestros.maestros') }}"
+               class="text-white bg-gray-600 hover:bg-gray-700 font-medium rounded-lg text-sm px-4 py-2">
+               Cancelar
+            </a>
+
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
